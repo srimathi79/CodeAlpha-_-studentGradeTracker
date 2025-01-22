@@ -1,0 +1,45 @@
+import java.util.Scanner;
+
+public class Main {
+public static void main(String[] args) {
+        double balance = 0.0;
+        Scanner scanner = new Scanner(System.in);
+        int option;
+        while (true) {
+            System.out.println("\nSimple Bank Menu:");
+            System.out.println("1. Deposit");
+            System.out.println("2. Withdraw");
+            System.out.println("3. Check Balance");
+            System.out.println("4. Exit");
+            System.out.print("Choose option: ");
+            option = scanner.nextInt();
+            if (option == 1) {
+                System.out.print("Enter deposit amount: ");
+                double deposit = scanner.nextDouble();
+                if (deposit > 0) {
+                    balance += deposit;
+                    System.out.println("Deposited: " + deposit);
+                } else {
+                    System.out.println("Invalid deposit amount.");
+                }
+            } else if (option == 2) {
+                System.out.print("Enter withdrawal amount: ");
+                double withdraw = scanner.nextDouble();
+                if (withdraw > 0 && withdraw <= balance) {
+                    balance -= withdraw;
+                    System.out.println("Withdrew: " + withdraw);
+                } else {
+                    System.out.println("Invalid withdrawal or insufficient funds.");
+                }
+            } else if (option == 3) {
+                System.out.println("Balance: " + balance);
+            } else if (option == 4) {
+                System.out.println("Thank you for using Simple Bank!");
+                break;
+            } else {
+                System.out.println("Invalid option.");
+            }
+        }
+        scanner.close();
+    }
+}
