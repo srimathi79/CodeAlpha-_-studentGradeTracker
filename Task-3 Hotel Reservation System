@@ -1,0 +1,72 @@
+import java.util.Scanner;
+public class Main {
+    static String[] roomCategories = {"Standard", "Deluxe", "Suite"};
+    static double[] roomPrices = {100, 200, 300};
+    static boolean[] roomAvailability = {true, true, true, true, true, true};
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+        while (true) {
+            System.out.println("\n1. View Available Rooms");
+            System.out.println("2. Make a Reservation");
+            System.out.println("3. View Booking Details");
+            System.out.println("4. Exit");
+            System.out.print("Choose an option: ");
+            choice = scanner.nextInt();
+            if (choice == 1) {
+                viewAvailableRooms();
+            } else if (choice == 2) {
+                makeReservation(scanner);
+            } else if (choice == 3) {
+                viewBookingDetails();
+            } else if (choice == 4) {
+                System.out.println("Thank you! Goodbye.");
+                break;
+            } else {
+                System.out.println("Invalid choice. Try again.");
+            }
+        }
+
+        scanner.close();
+    }
+    public static void viewAvailableRooms() {
+        System.out.println("\nAvailable Rooms:");
+        for (int i = 0; i < roomCategories.length; i++) {
+            if (roomAvailability[i]) {
+                System.out.println((i + 1) + ". " + roomCategories[i] + " - $" + roomPrices[i]);
+            }
+        }
+    }
+    public static void makeReservation(Scanner scanner) {
+        viewAvailableRooms();
+        System.out.print("Enter room number to book: ");
+        int roomNum = scanner.nextInt() - 1;
+
+        if (roomNum >= 0 && roomNum < roomCategories.length && roomAvailability[roomNum]) {
+            roomAvailability[roomNum] = false;
+            System.out.println("Room booked successfully: " + roomCategories[roomNum]);
+            processPayment(scanner, roomPrices[roomNum]);
+        } else {
+            System.out.println("Invalid or unavailable room.");
+        }
+    }
+    public static void processPayment(Scanner scanner, double price) {
+        System.out.print("Enter payment amount: $");
+        double payment = scanner.nextDouble();
+
+        if (payment >= price) {
+            double change = payment - price;
+            System.out.println("Payment successful. Your change is: $" + change);
+        } else {
+            System.out.println("Insufficient payment. Reservation canceled.");
+        }
+    }
+    public static void viewBookingDetails() {
+        System.out.println("\nBooked Rooms:");
+        for (int i = 0; i < roomCategories.length; i++) {
+            if (!roomAvailability[i]) {
+                System.out.println(roomCategories[i] + " room booked.");
+            }
+        }
+    }
+}
